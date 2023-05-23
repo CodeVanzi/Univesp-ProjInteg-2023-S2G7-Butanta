@@ -11,10 +11,10 @@ from django.contrib.auth.models import User
 from rolepermissions.checkers import has_permission
 from rolepermissions.checkers import has_role
 
-def home(request):
+def index(request):
     if request.user.is_authenticated:
         return redirect('main')
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 
 
 @login_required
@@ -34,7 +34,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Você está logado.")
-            return redirect('home')
+            return redirect('index')
         else:
             messages.error(request, "Usuário ou senha inválidos. Por favor, tente novamente.")
             return redirect('login')
@@ -45,7 +45,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "Você saiu da sua conta...")
-    return redirect('home')
+    return redirect('index')
 
 def register_user(request):
     if request.method == 'POST':
@@ -93,10 +93,10 @@ def delete_animal(request, pk):
     if has_role(request.user, 'sindico') or delete_it.tutor == request.user:
         delete_it.delete()
         messages.success(request, "Animal deletado com sucesso!")
-        return redirect('home')
+        return redirect('index')
     else:
         messages.error(request, "Você não tem permissão para excluir este animal.")
-        return redirect('home')
+        return redirect('index')
 
 @login_required
 @has_permission_decorator('can_add_animal')
@@ -137,7 +137,7 @@ def update_animal(request, pk):
         return render(request, 'update_animal.html', {'form': form})
     else:
         messages.error(request, "Você não tem permissão para atualizar este animal.")
-        return redirect('home')
+        return redirect('index')
 
 @login_required
 def pet_list(request):
@@ -155,5 +155,5 @@ def animal_profile(request, pk):
         return render(request, 'animal_profile.html', {'animal': animal})
     else:
         messages.error(request, "Você não tem permissão para ver este animal")
-        return redirect('home')
+        return redirect('index')
 
