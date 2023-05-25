@@ -45,9 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registro_de_animais',
     'rolepermissions',
-    
-
-
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -87,7 +85,7 @@ WSGI_APPLICATION = 'quickstartproject.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'azure': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'PI_S2G7',
@@ -98,7 +96,7 @@ DATABASES = {
             'sslmode': 'require',
         }
     },
-    'dev': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -158,3 +156,9 @@ MEDIA_URL = r'/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ROLEPERMISSIONS_MODULE = 'registro_de_animais.roles'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+AZURE_ACCOUNT_NAME = 'petmedvidastorage'
+AZURE_ACCOUNT_KEY = 'hektiopqIovp1q4sz8wfPHX3TghKOv5sYiKeIRNOwVBm6LYGAMIH9tGCd761wyroDf9S6BT8x9/1+ASt2YdS5g=='
+AZURE_CONTAINER = 'fotosdepets'
